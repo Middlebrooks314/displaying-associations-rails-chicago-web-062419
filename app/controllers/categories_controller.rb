@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    category = Category.create(params[:category])
+    category = Category.create(user_params)
     redirect_to category_path(category)
   end
 
@@ -24,5 +24,11 @@ class CategoriesController < ApplicationController
     category = Category.find(params[:id])
     category.update(params.require(:category))
     redirect_to category_path(category)
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :salt, :encrypted_password)
   end
 end
